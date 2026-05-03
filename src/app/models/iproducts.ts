@@ -1,4 +1,4 @@
-
+// models/iproducts.ts
 export interface IProduct {
   id: number;
   name: string;
@@ -6,4 +6,6 @@ export interface IProduct {
   price: number;
   img: string;
   categoryID: number;
+  badge?: string;
+  specs?: { label: string; value: string }[];
 }
