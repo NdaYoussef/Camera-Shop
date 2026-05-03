@@ -1,80 +1,61 @@
-<h2>Store Name: {{ store.name }}</h2>
+<!-- products.component.html -->
+<section class="po-products">
 
-<img [src]="store.logo" alt="Store Logo" width="200">
+  <!-- ── Header bar ── -->
+  <div class="po-products__bar">
+    <p class="po-products__title">ALPHA SERIES BODY HIERARCHY</p>
+    <div class="po-products__filters">
+      @for (f of filters; track f) {
+        <button
+          class="po-filter-btn"
+          [class.po-filter-btn--active]="activeFilter === f"
+          (click)="setFilter(f)">
+          {{ f }}
+        </button>
+      }
+    </div>
+  </div>
 
-<h3>Store Owner: {{ storeOwner }}</h3>
+  <!-- ── Product grid ── -->
+  <div class="po-products__grid">
+    @for (p of filteredProducts; track p.id) {
+      <div class="po-card">
 
-<hr>
-
-<input 
-  type="text" 
-  [(ngModel)]="searchText" 
-  placeholder="Search by product name"
-  class="form-control w-50 mb-3"
-/>
-
-<hr>
-
-<div class="container">
-  <div class="row g-3">
-
-    @for (p of productList; track p.id) {
-
-      @if (p.name.toLowerCase().includes(searchText.toLowerCase())) {
-
-        <div class="col-lg-4 col-md-6 col-12">
-
-          <div class="card h-100 shadow-sm" style="border-radius:12px;">
-
-            <img 
-              [src]="p.img" 
-              class="card-img-top"
-              style="height: 200px; object-fit: cover; border-top-left-radius:12px; border-top-right-radius:12px;"
-            >
-
-            <div class="card-body d-flex flex-column">
-
-              <h5 class="card-title">{{ p.name }}</h5>
-
-              <p class="card-text mb-1">Price: {{ p.price }}</p>
-              <p class="card-text mb-1">Quantity: {{ p.quantity }}</p>
-
-              <p class="fw-bold">
-
-                
-
-                {{
-                  p.quantity === 0 ? 'Out of stock' :
-                  p.quantity === 1 ? 'Last one item' :
-                  p.quantity === 2 ? 'Last two items' :
-                  'In stock'
-                }}
-              </p>
-
-              <div class="mt-auto">
-                <button 
-                  class="btn btn-primary btn-sm me-2"
-                  (click)="buy(p)" 
-                  [disabled]="p.quantity === 0">
-                  Buy
-                </button>
-
-                <button 
-                  class="btn btn-outline-secondary btn-sm"
-                  (click)="showDetails(p)">
-                  Details
-                </button>
-              </div>
-
-            </div>
-
-          </div>
-
+        <!-- Image -->
+        <div class="po-card__img-wrap">
+          @if (p.badge) {
+            <span class="po-card__badge">{{ p.badge }}</span>
+          }
+          <img [src]="p.img" [alt]="p.name" class="po-card__img" />
         </div>
 
-      }
+        <!-- Body -->
+        <div class="po-card__body">
+          <h3 class="po-card__name">{{ p.name }}</h3>
 
+          <div class="po-card__specs">
+            @for (spec of p.specs; track spec.label) {
+              <div class="po-card__spec-row">
+                <span class="po-card__spec-label">{{ spec.label }}</span>
+                <span class="po-card__spec-value">{{ spec.value }}</span>
+              </div>
+            }
+          </div>
+
+          <div class="po-card__footer">
+            <span class="po-card__price">${{ p.price }}</span>
+            <button
+              class="po-card__cart-btn"
+              (click)="addToCart(p)"
+              [disabled]="p.quantity === 0"
+              aria-label="Add to cart">
+              <i class="fa-solid fa-cart-shopping"></i>
+            </button>
+          </div>
+        </div>
+
+      </div>
     }
-
   </div>
-</div>
+
+</section>
