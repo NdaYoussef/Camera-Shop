@@ -1,22 +1,55 @@
 <!-- home.component.html -->
-<section class="po-hero">
-  <div class="po-hero__overlay"></div>
+<div class="po-home">
 
-  <img src="Images/HomeCam.png" alt="Sony Alpha Camera" class="po-hero__img" />
-
-  <div class="po-hero__content">
-    <p class="po-hero__eyebrow">A L P H A &nbsp; S Y S T E M</p>
-    <h1 class="po-hero__title">
-      PRECISION ENGINEERED<br>FOR THE ELITE.
-    </h1>
-    <p class="po-hero__body">
-      Redefining the boundaries of imaging technology with the
-      Sony E-mount ecosystem. Professional-grade optics
-      paired with industry-leading autofocus performance.
-    </p>
-    <div class="po-hero__actions">
-      <button class="po-btn po-btn--filled">EXPLORE RANGE</button>
-      <button class="po-btn po-btn--outline">TECHNICAL SPECS</button>
+  <!-- ── Hero ── -->
+  <section class="po-hero">
+    <div class="po-hero__overlay"></div>
+    <img src="Images/HomeCam.png" alt="Sony Alpha Camera" class="po-hero__img" />
+    <div class="po-hero__content">
+      <p class="po-hero__eyebrow">A L P H A &nbsp; S Y S T E M</p>
+      <h1 class="po-hero__title">
+        PRECISION ENGINEERED<br>FOR THE ELITE.
+      </h1>
+      <p class="po-hero__body">
+        Redefining the boundaries of imaging technology with the
+        Sony E-mount ecosystem. Professional-grade optics
+        paired with industry-leading autofocus performance.
+      </p>
+      <div class="po-hero__actions">
+        <button class="po-btn po-btn--filled">EXPLORE RANGE</button>
+        <button class="po-btn po-btn--outline">TECHNICAL SPECS</button>
+      </div>
     </div>
-  </div>
-</section>
+  </section>
+
+  <!-- ── Promise Section ── -->
+  <section class="po-promise">
+    <div class="po-promise__inner">
+
+      <!-- Left: text -->
+      <div class="po-promise__text">
+        <p class="po-promise__eyebrow">THE ONE MOUNT PROMISE</p>
+        <p class="po-promise__body">
+          Sony's E-mount system connects APS-C and Full-frame, stills and movies,
+          amateurs and professionals. A single mount for a limitless ecosystem of
+          over 70 native lenses.
+        </p>
+        <ul class="po-promise__list">
+          @for (item of features; track item.num) {
+            <li class="po-promise__item">
+              <span class="po-promise__num">{{ item.num }}</span>
+              <span class="po-promise__label">{{ item.label }}</span>
+            </li>
+          }
+        </ul>
+      </div>
+
+      <!-- Right: image -->
+      <div class="po-promise__media">
+        <img src="Images/Lense.png" alt="Sony E-mount Lens" class="po-promise__img" />
+      </div>
+
+    </div>
+  </section>
+
+</div>
