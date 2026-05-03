@@ -2,11 +2,14 @@
 import { Component } from '@angular/core';
 import { IProduct } from '../models/iproducts';
 import { ICategory } from '../models/icategory';
+import { ProductCardDirective } from '../models/CardDirective';
+import { CurrencyPipe, UpperCasePipe, TitleCasePipe } from '@angular/common';
+
 
 @Component({
   selector: 'app-products',
   standalone: true,
-  imports: [],
+  imports: [ProductCardDirective, CurrencyPipe, UpperCasePipe, TitleCasePipe],
   templateUrl: './models.html',
   styleUrls: ['./models.css']
 })
