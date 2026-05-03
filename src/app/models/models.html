@@ -19,7 +19,7 @@
   <!-- ── Product grid ── -->
   <div class="po-products__grid">
     @for (p of filteredProducts; track p.id) {
-      <div class="po-card">
+      <div class="po-card" productCard>
 
         <!-- Image -->
         <div class="po-card__img-wrap">
@@ -31,19 +31,22 @@
 
         <!-- Body -->
         <div class="po-card__body">
-          <h3 class="po-card__name">{{ p.name }}</h3>
-
+          <!-- uppercase pipe on name -->
+          <h3 class="po-card__name">{{ p.name | uppercase }}</h3>
+ 
           <div class="po-card__specs">
             @for (spec of p.specs; track spec.label) {
               <div class="po-card__spec-row">
-                <span class="po-card__spec-label">{{ spec.label }}</span>
-                <span class="po-card__spec-value">{{ spec.value }}</span>
+                <!-- uppercase pipe on label -->
+                <span class="po-card__spec-label">{{ spec.label | uppercase }}</span>
+                <!-- titlecase pipe on value -->
+                <span class="po-card__spec-value">{{ spec.value | titlecase }}</span>
               </div>
             }
           </div>
 
           <div class="po-card__footer">
-            <span class="po-card__price">${{ p.price }}</span>
+           <span class="po-card__price">{{ p.price | currency:'USD':'symbol':'1.2-2' }}</span>
             <button
               class="po-card__cart-btn"
               (click)="addToCart(p)"
