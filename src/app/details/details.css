@@ -1,0 +1,269 @@
+/* details.css */
+
+.pd-page {
+  background: #fff;
+  padding: 2rem 3rem 4rem;
+  font-family: 'Barlow', sans-serif;
+}
+
+/* ── Back button ── */
+.pd-back-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: #888;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  margin-bottom: 1.25rem;
+  transition: color 0.2s;
+}
+
+.pd-back-btn:hover { color: #111; }
+
+/* ── Breadcrumb ── */
+.pd-breadcrumb {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 0.7rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: #aaa;
+  margin-bottom: 2rem;
+}
+
+.pd-breadcrumb i { font-size: 0.55rem; }
+.pd-breadcrumb__active { color: #111; font-weight: 600; }
+
+/* ── Main layout ── */
+.pd-main {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 4rem;
+  align-items: start;
+}
+
+/* ── Gallery ── */
+.pd-gallery {
+  display: flex;
+  gap: 1rem;
+}
+
+.pd-gallery__thumbs {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.pd-thumb {
+  width: 68px;
+  height: 68px;
+  border: 1.5px solid #e8e8e8;
+  cursor: pointer;
+  overflow: hidden;
+  transition: border-color 0.2s;
+}
+
+.pd-thumb img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  filter: grayscale(15%);
+}
+
+.pd-thumb--active { border-color: #111; }
+.pd-thumb:hover   { border-color: #888; }
+
+.pd-gallery__main {
+  position: relative;
+  flex: 1;
+  background: #f7f7f7;
+  overflow: hidden;
+}
+
+.pd-badge {
+  position: absolute;
+  top: 14px;
+  left: 14px;
+  z-index: 1;
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 0.65rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  background: #111;
+  color: #fff;
+  padding: 4px 10px;
+}
+
+.pd-gallery__img {
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  object-fit: cover;
+  filter: grayscale(10%);
+  display: block;
+  transition: transform 0.5s ease;
+}
+
+.pd-gallery__main:hover .pd-gallery__img { transform: scale(1.04); }
+
+/* ── Info ── */
+.pd-info__category {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 0.68rem;
+  letter-spacing: 0.22em;
+  color: #aaa;
+  margin-bottom: 0.4rem;
+}
+
+.pd-info__name {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 2.4rem;
+  font-weight: 700;
+  letter-spacing: 0.03em;
+  color: #111;
+  margin: 0 0 0.5rem;
+}
+
+/* Divider */
+.pd-divider {
+  border: none;
+  border-top: 1px solid #e8e8e8;
+  margin: 1rem 0;
+}
+
+/* Price */
+.pd-price-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.pd-price {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 1.8rem;
+  font-weight: 700;
+  color: #111;
+}
+
+.pd-stock {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 0.72rem;
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  color: #555;
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+}
+
+/* Specs */
+.pd-specs__title {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  color: #333;
+  margin-bottom: 0.75rem;
+}
+
+.pd-spec-row {
+  display: flex;
+  justify-content: space-between;
+  padding: 0.65rem 0;
+  border-bottom: 1px solid #f0f0f0;
+}
+
+.pd-spec-label {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 0.7rem;
+  letter-spacing: 0.12em;
+  color: #aaa;
+}
+
+.pd-spec-value {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: #222;
+}
+
+/* Actions */
+.pd-actions {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.pd-qty {
+  display: flex;
+  align-items: center;
+  border: 1.5px solid #e8e8e8;
+  height: 46px;
+}
+
+.pd-qty__btn {
+  width: 38px;
+  height: 100%;
+  background: none;
+  border: none;
+  font-size: 1.1rem;
+  cursor: pointer;
+  color: #333;
+  transition: background 0.2s;
+}
+
+.pd-qty__btn:hover { background: #f4f4f4; }
+
+.pd-qty__val {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 0.9rem;
+  font-weight: 600;
+  width: 36px;
+  text-align: center;
+  border-left: 1.5px solid #e8e8e8;
+  border-right: 1.5px solid #e8e8e8;
+  line-height: 46px;
+}
+
+.pd-btn {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  padding: 0 1.6rem;
+  height: 46px;
+  border: 1.5px solid #111;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  transition: background 0.25s, color 0.25s;
+}
+
+.pd-btn--filled           { background: #111; color: #fff; flex: 1; justify-content: center; }
+.pd-btn--filled:hover     { background: #333; }
+.pd-btn--filled:disabled  { background: #ccc; border-color: #ccc; cursor: not-allowed; }
+.pd-btn--icon             { padding: 0; width: 46px; justify-content: center; border-color: #e8e8e8; color: #555; }
+.pd-btn--icon:hover       { background: #f4f4f4; }
+
+/* ── Responsive ── */
+@media (max-width: 991px) {
+  .pd-main  { grid-template-columns: 1fr; gap: 2rem; }
+  .pd-page  { padding: 1.5rem; }
+}
+
+@media (max-width: 576px) {
+  .pd-gallery       { flex-direction: column-reverse; }
+  .pd-gallery__thumbs { flex-direction: row; }
+  .pd-thumb         { width: 56px; height: 56px; }
+  .pd-info__name    { font-size: 1.8rem; }
+}

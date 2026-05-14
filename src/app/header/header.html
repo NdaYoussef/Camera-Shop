@@ -10,19 +10,37 @@
 
     <div class="collapse navbar-collapse" id="navMenu">
       <ul class="navbar-nav mx-auto">
-        @for (link of navLinks; track link.label) {
+       
           <li class="nav-item">
-            <a class="nav-link po-link" [class.active]="link.active" href="#">{{ link.label }}</a>
+            <a class="nav-link po-link" routerLink="/home" routerLinkActive="active">Home</a>
           </li>
-        }
+          <li class="nav-item">
+            <a class="nav-link po-link" routerLink="/about" routerLinkActive="active">About</a>
+          </li>
+            <li class="nav-item">
+            <a class="nav-link po-link" routerLink="/contact" routerLinkActive="active">Contact</a>
+          </li>
+            <li class="nav-item">
+            <a class="nav-link po-link" routerLink="/productsApi" routerLinkActive="active">Products</a>
+          </li>
+            <li class="nav-item">
+            <a class="nav-link po-link" routerLink="/register" routerLinkActive="active">Register</a>
+          </li>
+            <li class="nav-item">
+            <a class="nav-link po-link" routerLink="/login" routerLinkActive="active">Login</a>
+          </li>
+            
       </ul>
 
       <div class="d-flex gap-2">
         <button class="po-icon-btn" aria-label="Cart">
           <i class="fa-solid fa-cart-shopping"></i>
         </button>
-        <button class="po-icon-btn" aria-label="Account">
+        <button class="po-icon-btn"  routerLink="/profile"aria-label="Account">
           <i class="fa-solid fa-circle-user"></i>
+        </button>
+        <button class="po-icon-btn"  routerLink="/search"aria-label="Account">
+          <i class="fa-solid fa-search"></i>
         </button>
       </div>
     </div>

@@ -1,10 +1,11 @@
 // home.component.ts
 import { Component } from '@angular/core';
+import { ClockComponent } from '../clock/clock';
 
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [],
+  imports: [ClockComponent],
   templateUrl: './home.html',
   styleUrls: ['./home.css']
 })

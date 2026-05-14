@@ -1,0 +1,186 @@
+<!-- register.html -->
+<div class="reg-page">
+  <div class="reg-wrapper">
+
+    <!-- ── Form Card ── -->
+    <div class="reg-card">
+
+      <div class="reg-card__header">
+        <p class="reg-card__eyebrow">PRECISION OPTICS</p>
+        <h2 class="reg-card__title">CREATE ACCOUNT</h2>
+        <p class="reg-card__sub">Join the Alpha ecosystem</p>
+      </div>
+
+      <form [formGroup]="registerForm" (ngSubmit)="submit()" novalidate>
+
+        <!-- ── Full Name ── -->
+        <div class="mb-3">
+          <label class="reg-label">FULL NAME</label>
+          <input
+            type="text"
+            formControlName="fullName"
+            placeholder="e.g. Adrian Vance"
+            class="form-control reg-input"
+            [class.is-valid]="fullName!.valid && fullName!.touched"
+            [class.is-invalid]="fullName!.invalid && fullName!.touched"
+          />
+          <div class="valid-feedback">Looks good!</div>
+          @if (fullName!.invalid && fullName!.touched) {
+            @if (fullName!.errors?.['required']) {
+              <div class="invalid-feedback d-block">Full name is required.</div>
+            } @else if (fullName!.errors?.['minlength']) {
+              <div class="invalid-feedback d-block">
+                Minimum {{ fullName!.errors?.['minlength'].requiredLength }} characters.
+                ({{ fullName!.errors?.['minlength'].actualLength }} entered)
+              </div>
+            }
+          }
+        </div>
+
+        <!-- ── Email ── -->
+        <div class="mb-3">
+          <label class="reg-label">EMAIL ADDRESS</label>
+          <input
+            type="email"
+            formControlName="email"
+            placeholder="e.g. name@domain.com"
+            class="form-control reg-input"
+            [class.is-valid]="email!.valid && email!.touched"
+            [class.is-invalid]="email!.invalid && email!.touched"
+          />
+          <div class="valid-feedback">Valid email!</div>
+          @if (email!.invalid && email!.touched) {
+            @if (email!.errors?.['required']) {
+              <div class="invalid-feedback d-block">Email is required.</div>
+            } @else if (email!.errors?.['email'] || email!.errors?.['pattern']) {
+              <div class="invalid-feedback d-block">Enter a valid email (e.g. name&#64;domain.com).</div>
+            }
+          }
+        </div>
+
+        <!-- ── Phone ── -->
+        <div class="mb-3">
+          <label class="reg-label">MOBILE NUMBER</label>
+          <input
+            type="tel"
+            formControlName="phone"
+            placeholder="e.g. 01012345678"
+            class="form-control reg-input"
+            [class.is-valid]="phone!.valid && phone!.touched"
+            [class.is-invalid]="phone!.invalid && phone!.touched"
+          />
+          <div class="valid-feedback">Valid number!</div>
+          @if (phone!.invalid && phone!.touched) {
+            @if (phone!.errors?.['required']) {
+              <div class="invalid-feedback d-block">Mobile number is required.</div>
+            } @else if (phone!.errors?.['pattern']) {
+              <div class="invalid-feedback d-block">Enter a valid Egyptian mobile (e.g. 01012345678).</div>
+            }
+          }
+        </div>
+
+        <!-- ── Password ── -->
+        <div class="mb-3">
+          <label class="reg-label">PASSWORD</label>
+          <input
+            type="password"
+            formControlName="password"
+            placeholder="Min. 6 characters"
+            class="form-control reg-input"
+            [class.is-valid]="password!.valid && password!.touched"
+            [class.is-invalid]="password!.invalid && password!.touched"
+          />
+          <div class="valid-feedback">Strong password!</div>
+          @if (password!.invalid && password!.touched) {
+            @if (password!.errors?.['required']) {
+              <div class="invalid-feedback d-block">Password is required.</div>
+            } @else if (password!.errors?.['minlength']) {
+              <div class="invalid-feedback d-block">
+                At least {{ password!.errors?.['minlength'].requiredLength }} characters required.
+              </div>
+            }
+          }
+        </div>
+
+        <!-- ── Confirm Password ── -->
+        <div class="mb-3">
+          <label class="reg-label">CONFIRM PASSWORD</label>
+          <input
+            type="password"
+            formControlName="confirmPassword"
+            placeholder="Re-enter your password"
+            class="form-control reg-input"
+            [class.is-valid]="confirmPassword!.valid && confirmPassword!.touched && !registerForm.errors?.['misMatch']"
+            [class.is-invalid]="(confirmPassword!.invalid && confirmPassword!.touched) || (registerForm.errors?.['misMatch'] && confirmPassword!.touched)"
+          />
+          <div class="valid-feedback">Passwords match!</div>
+          @if (confirmPassword!.touched) {
+            @if (confirmPassword!.errors?.['required']) {
+              <div class="invalid-feedback d-block">Please confirm your password.</div>
+            } @else if (registerForm.errors?.['misMatch']) {
+              <div class="invalid-feedback d-block">Passwords do not match.</div>
+            }
+          }
+        </div>
+
+        <!-- ── Terms ── -->
+        <div class="mb-4 reg-terms">
+          <input
+            type="checkbox"
+            formControlName="terms"
+            id="terms"
+            class="reg-checkbox"
+          />
+          <label for="terms" class="reg-terms__label">
+            I agree to the <span class="reg-terms__link">Terms &amp; Conditions</span>
+          </label>
+        </div>
+
+        <!-- ── Buttons ── -->
+        <div class="reg-btns">
+          <button
+            type="submit"
+            class="po-btn po-btn--filled"
+            [disabled]="!registerForm.get('terms')!.value">
+            <i class="fa-solid fa-user-plus"></i> REGISTER
+          </button>
+          <button
+            type="button"
+            class="po-btn po-btn--outline"
+            (click)="registerForm.reset()">
+            <i class="fa-solid fa-rotate-left"></i> RESET
+          </button>
+        </div>
+
+      </form>
+    </div>
+
+    <!-- ── Success Card ── -->
+    @if (submittedUser) {
+      <div class="reg-success">
+        <div class="reg-success__header">
+          <i class="fa-solid fa-circle-check reg-success__icon"></i>
+          <p class="reg-success__title">ACCOUNT CREATED SUCCESSFULLY</p>
+        </div>
+        <hr class="reg-divider" />
+        <div class="reg-success__row">
+          <span class="reg-success__label">FULL NAME</span>
+          <span class="reg-success__value">{{ submittedUser.fullName }}</span>
+        </div>
+        <div class="reg-success__row">
+          <span class="reg-success__label">EMAIL</span>
+          <span class="reg-success__value">{{ submittedUser.email }}</span>
+        </div>
+        <div class="reg-success__row">
+          <span class="reg-success__label">MOBILE</span>
+          <span class="reg-success__value">{{ submittedUser.phone }}</span>
+        </div>
+        <div class="reg-success__row">
+          <span class="reg-success__label">PASSWORD</span>
+          <span class="reg-success__value">••••••••</span>
+        </div>
+      </div>
+    }
+
+  </div>
+</div>

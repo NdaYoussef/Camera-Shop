@@ -1,0 +1,103 @@
+<!-- profile.component.html -->
+<div class="po-profile">
+
+  <!-- ── Hero / Header ── -->
+  <div class="po-profile__header">
+    <div class="po-profile__identity">
+      <img [src]="user.avatar" [alt]="user.name" class="po-profile__avatar" />
+      <div class="po-profile__meta">
+        <h1 class="po-profile__name">{{ user.name | uppercase }}</h1>
+        <span class="po-profile__tier">
+          <i class="fa-solid fa-square-full"></i>
+          {{ user.membershipTier | uppercase }}
+        </span>
+        <!-- date pipe: joined date -->
+        <p class="po-profile__joined">
+          JOINED: {{ user.joinDate | date:'MMMM d, y' }}
+        </p>
+      </div>
+    </div>
+
+    <div class="po-profile__header-right">
+      <!-- Today's date using date pipe -->
+      <p class="po-profile__today">{{ today | date:'EEEE, MMMM d, y' }}</p>
+      <button class="po-btn po-btn--filled">EDIT PROFILE</button>
+    </div>
+  </div>
+
+  <hr class="po-divider" />
+
+  <!-- ── Body: two columns ── -->
+  <div class="po-profile__body">
+
+    <!-- Left: Account Details -->
+    <div class="po-profile__left">
+      <p class="po-profile__section-title">ACCOUNT DETAILS</p>
+      <hr class="po-divider" />
+
+      <div class="po-profile__field">
+        <span class="po-profile__field-label">EMAIL ADDRESS</span>
+        <p class="po-profile__field-value">{{ user.email }}</p>
+      </div>
+
+      <div class="po-profile__field">
+        <span class="po-profile__field-label">SHIPPING ADDRESS</span>
+        @for (line of user.shippingAddress; track line) {
+          <p class="po-profile__field-value">{{ line }}</p>
+        }
+      </div>
+
+      <div class="po-profile__field">
+        <span class="po-profile__field-label">PAYMENT METHOD</span>
+        <p class="po-profile__field-value po-profile__card">
+          <i class="fa-regular fa-credit-card"></i>
+          <!-- custom creditCard pipe -->
+          {{ user.creditCard | creditCard }}
+        </p>
+      </div>
+
+      <button class="po-profile__link">
+        MANAGE SUBSCRIPTIONS <i class="fa-solid fa-arrow-right"></i>
+      </button>
+    </div>
+
+
+    <div class="po-profile__right">
+
+   
+      <div class="po-profile__order-card">
+        <div class="po-profile__order-header">
+          <span class="po-profile__section-title">MOST RECENT ORDER</span>
+          <span class="po-profile__order-id">{{ user.recentOrder.id }}</span>
+        </div>
+        <div class="po-profile__order-body">
+          <img [src]="user.recentOrder.img" alt="Order" class="po-profile__order-img" />
+          <div class="po-profile__order-info">
+            <h4 class="po-profile__order-name">{{ user.recentOrder.product | uppercase }}</h4>
+            <!-- date pipe on delivered date -->
+            <p class="po-profile__order-date">
+              Delivered: {{ user.recentOrder.deliveredDate | date:'MMM d, y' }}
+            </p>
+            <button class="po-btn po-btn--outline po-btn--sm">TRACK PACKAGE</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Registered Gear -->
+      <p class="po-profile__section-title mt-4">REGISTERED GEAR</p>
+      <div class="po-profile__gear-grid">
+        @for (gear of user.registeredGear; track gear.serial) {
+          <div class="po-profile__gear-card">
+            <i class="fa-solid {{ gear.icon }} po-profile__gear-icon"></i>
+            <div>
+              <p class="po-profile__gear-name">{{ gear.name | uppercase }}</p>
+              <p class="po-profile__gear-serial">SN: {{ gear.serial }}</p>
+            </div>
+          </div>
+        }
+      </div>
+
+    </div>
+  </div>
+
+</div>

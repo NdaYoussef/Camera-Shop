@@ -1,4 +1,4 @@
-<!-- products.component.html -->
+<!-- models.html -->
 <section class="po-products">
 
   <!-- ── Header bar ── -->
@@ -16,10 +16,23 @@
     </div>
   </div>
 
+  <!-- ── No results ── -->
+  @if (displayedProducts.length === 0) {
+    <div class="po-no-results">
+      <i class="fa-solid fa-magnifying-glass"></i>
+      <p>No products found for <strong>"{{ searchQuery }}"</strong></p>
+    </div>
+  }
+
   <!-- ── Product grid ── -->
   <div class="po-products__grid">
-    @for (p of filteredProducts; track p.id) {
-      <div class="po-card" productCard>
+    @for (p of displayedProducts; track p.id) {
+      <div
+        class="po-card"
+        [ngStyle]="{'background-color': p.quantity === 1 ? '#FFF9E6' : '#ffffff'}"
+        productCard
+        [hoverScale]="1.05"
+        [hoverShadow]="'0 4px 20px rgba(124, 83, 87, 0.08)'">
 
         <!-- Image -->
         <div class="po-card__img-wrap">
@@ -31,22 +44,22 @@
 
         <!-- Body -->
         <div class="po-card__body">
-          <!-- uppercase pipe on name -->
           <h3 class="po-card__name">{{ p.name | uppercase }}</h3>
- 
+
           <div class="po-card__specs">
             @for (spec of p.specs; track spec.label) {
               <div class="po-card__spec-row">
-                <!-- uppercase pipe on label -->
                 <span class="po-card__spec-label">{{ spec.label | uppercase }}</span>
-                <!-- titlecase pipe on value -->
                 <span class="po-card__spec-value">{{ spec.value | titlecase }}</span>
               </div>
             }
           </div>
 
           <div class="po-card__footer">
-           <span class="po-card__price">{{ p.price | currency:'USD':'symbol':'1.2-2' }}</span>
+            <span class="po-card__price">{{ p.price | currency:'USD':'symbol':'1.2-2' }}</span>
+            <button class="po-card__detail-btn" [routerLink]="['/products', p.id]" title="View Details">
+              Details
+            </button>
             <button
               class="po-card__cart-btn"
               (click)="addToCart(p)"

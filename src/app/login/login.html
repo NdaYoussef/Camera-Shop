@@ -1,0 +1,93 @@
+<!-- login.html -->
+<div class="login-page">
+  <div class="login-wrapper">
+
+    <!-- ── Login Card ── -->
+    <div class="login-card">
+
+      <div class="login-card__header">
+        <p class="login-eyebrow">PRECISION OPTICS</p>
+        <h2 class="login-title">WELCOME BACK</h2>
+        <p class="login-sub">Sign in to your account</p>
+      </div>
+
+      <form [formGroup]="loginForm" (ngSubmit)="submit()" novalidate>
+
+        <!-- ── Email ── -->
+        <div class="mb-3">
+          <label class="reg-label">EMAIL ADDRESS</label>
+          <input
+            type="email"
+            formControlName="email"
+            placeholder="e.g. name@domain.com"
+            class="form-control reg-input"
+            [class.is-valid]="email!.valid && email!.touched"
+            [class.is-invalid]="email!.invalid && email!.touched"
+          />
+          <div class="valid-feedback">Valid email!</div>
+          @if (email!.invalid && email!.touched) {
+            @if (email!.errors?.['required']) {
+              <div class="invalid-feedback d-block">Email is required.</div>
+            } @else if (email!.errors?.['email']) {
+              <div class="invalid-feedback d-block">Enter a valid email (e.g. name&#64;domain.com).</div>
+            }
+          }
+        </div>
+
+        <!-- ── Password ── -->
+        <div class="mb-4">
+          <label class="reg-label">PASSWORD</label>
+          <input
+            type="password"
+            formControlName="password"
+            placeholder="Min. 6 characters"
+            class="form-control reg-input"
+            [class.is-valid]="password!.valid && password!.touched"
+            [class.is-invalid]="password!.invalid && password!.touched"
+          />
+          <div class="valid-feedback">Looks good!</div>
+          @if (password!.invalid && password!.touched) {
+            @if (password!.errors?.['required']) {
+              <div class="invalid-feedback d-block">Password is required.</div>
+            } @else if (password!.errors?.['minlength']) {
+              <div class="invalid-feedback d-block">
+                At least {{ password!.errors?.['minlength'].requiredLength }} characters required.
+              </div>
+            }
+          }
+        </div>
+
+        <!-- ── Buttons ── -->
+        <div class="reg-btns">
+          <button type="submit" class="po-btn po-btn--filled">
+            <i class="fa-solid fa-right-to-bracket"></i> LOGIN
+          </button>
+          <button type="button" class="po-btn po-btn--outline" (click)="loginForm.reset()">
+            <i class="fa-solid fa-rotate-left"></i> RESET
+          </button>
+        </div>
+
+      </form>
+    </div>
+
+    <!-- ── Success Card ── -->
+    @if (submittedUser) {
+      <div class="reg-success">
+        <div class="reg-success__header">
+          <i class="fa-solid fa-circle-check reg-success__icon"></i>
+          <p class="reg-success__title">LOGGED IN SUCCESSFULLY</p>
+        </div>
+        <hr class="reg-divider" />
+        <div class="reg-success__row">
+          <span class="reg-success__label">EMAIL</span>
+          <span class="reg-success__value">{{ submittedUser.email }}</span>
+        </div>
+        <div class="reg-success__row">
+          <span class="reg-success__label">PASSWORD</span>
+          <span class="reg-success__value">••••••••</span>
+        </div>
+      </div>
+    }
+
+  </div>
+</div>

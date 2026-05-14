@@ -1,82 +1,88 @@
 // products.component.ts
-import { Component } from '@angular/core';
+import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
 import { IProduct } from '../models/iproducts';
-import { ICategory } from '../models/icategory';
 import { ProductCardDirective } from '../models/CardDirective';
-import { CurrencyPipe, UpperCasePipe, TitleCasePipe } from '@angular/common';
-
+import { CurrencyPipe, UpperCasePipe, TitleCasePipe, NgStyle } from '@angular/common';
+import { RouterLink } from '@angular/router';
+import { ProductsService } from '../Services/product-service';
 
 @Component({
   selector: 'app-products',
   standalone: true,
-  imports: [ProductCardDirective, CurrencyPipe, UpperCasePipe, TitleCasePipe],
+  imports: [
+    ProductCardDirective,
+    CurrencyPipe,
+    UpperCasePipe,
+    TitleCasePipe,
+    NgStyle,        
+    RouterLink
+  ],
   templateUrl: './models.html',
   styleUrls: ['./models.css']
 })
-export class ProductsComponent {
+export class ProductsComponent implements OnChanges {
+
+  @Input() searchQuery: string = '';
 
   activeFilter: string = 'ALL';
+  showDetail: boolean = false;
+  selectedProduct: IProduct | null = null;
+  filterProducts: IProduct[] = [];
 
   filters: string[] = ['ALL', 'FULL FRAME', 'APS-C'];
 
-  Categories: ICategory[] = [
-    { id: 1, name: 'FULL FRAME' },
-    { id: 2, name: 'APS-C' }
-  ];
+  constructor(private productsService: ProductsService) {}
 
-  productList: IProduct[] = [
-    {
-      id: 1,
-      name: 'ALPHA 7R V',
-      quantity: 5,
-      price: 3899.99,
-      img: 'Images/prd1.png',
-      categoryID: 1,
-      badge: 'NEW',
-      specs: [
-        { label: 'RESOLUTION', value: '61.0 MP' },
-        { label: 'AF POINTS',  value: '693 PHASE-DETECTION' }
-      ]
-    },
-    {
-      id: 2,
-      name: 'ALPHA 1',
-      quantity: 3,
-      price: 6499.99,
-      img: 'Images/prd2.png',
-      categoryID: 1,
-      badge: '',
-      specs: [
-        { label: 'BURST RATE', value: '30 FPS' },
-        { label: 'VIDEO',      value: '8K 30P' }
-      ]
-    },
-    {
-      id: 3,
-      name: 'ALPHA 7S III',
-      quantity: 2,
-      price: 3499.99,
-      img: 'Images/prd3.png',
-      categoryID: 2,
-      badge: '',
-      specs: [
-        { label: 'LOW LIGHT', value: 'ISO 409,600' },
-        { label: 'FORMAT',    value: '10-BIT 4:2:2' }
-      ]
+  
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes['searchQuery']) {
+      this.filterProducts = this.search(this.searchQuery);
     }
-  ];
-
-  get filteredProducts(): IProduct[] {
-    if (this.activeFilter === 'ALL') return this.productList;
-    const cat = this.Categories.find(c => c.name === this.activeFilter);
-    return cat ? this.productList.filter(p => p.categoryID === cat.id) : this.productList;
   }
 
-  setFilter(f: string) {
+
+  search(query: string): IProduct[] {
+    const allProducts = this.productsService.getFilteredProducts(this.activeFilter);
+
+    if (!query.trim()) {
+      return allProducts;
+    }
+
+    return allProducts.filter(p =>
+      p.name.toLowerCase().includes(query.trim().toLowerCase())
+    );
+  }
+
+  
+  get displayedProducts(): IProduct[] {
+    if (this.searchQuery.trim()) {
+      return this.filterProducts;
+    }
+    return this.productsService.getFilteredProducts(this.activeFilter);
+  }
+
+  get categories() {
+    return this.productsService.categories;
+  }
+
+  setFilter(f: string): void {
     this.activeFilter = f;
+    if (this.searchQuery.trim()) {
+      this.filterProducts = this.search(this.searchQuery);
+    }
   }
 
-  addToCart(product: IProduct) {
-    if (product.quantity > 0) product.quantity--;
+  addToCart(product: IProduct): void {
+    this.productsService.buy(product);
+  }
+
+  openDetail(product: IProduct): void {
+    this.selectedProduct = product;
+    this.showDetail = true;
+  }
+
+  goBack(): void {
+    this.showDetail = false;
+    this.selectedProduct = null;
   }
 }
