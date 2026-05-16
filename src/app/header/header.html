@@ -21,25 +21,31 @@
             <a class="nav-link po-link" routerLink="/contact" routerLinkActive="active">Contact</a>
           </li>
             <li class="nav-item">
-            <a class="nav-link po-link" routerLink="/productsApi" routerLinkActive="active">Products</a>
+            <a class="nav-link po-link" routerLink="/products" routerLinkActive="active">Products</a>
           </li>
+          @if (!authService.isLoggedIn()){
             <li class="nav-item">
             <a class="nav-link po-link" routerLink="/register" routerLinkActive="active">Register</a>
           </li>
             <li class="nav-item">
             <a class="nav-link po-link" routerLink="/login" routerLinkActive="active">Login</a>
           </li>
-            
+        }
+            @if (authService.isLoggedIn()) {
+            <li class="nav-item">
+            <a class="nav-link po-link"  (click)="logout()">Logout</a>
+          </li>
+  } 
       </ul>
 
       <div class="d-flex gap-2">
         <button class="po-icon-btn" aria-label="Cart">
           <i class="fa-solid fa-cart-shopping"></i>
         </button>
-        <button class="po-icon-btn"  routerLink="/profile"aria-label="Account">
+        <button class="po-icon-btn"  routerLink="/profile" aria-label="Account">
           <i class="fa-solid fa-circle-user"></i>
         </button>
-        <button class="po-icon-btn"  routerLink="/search"aria-label="Account">
+        <button class="po-icon-btn"  routerLink="/search" aria-label="Account">
           <i class="fa-solid fa-search"></i>
         </button>
       </div>

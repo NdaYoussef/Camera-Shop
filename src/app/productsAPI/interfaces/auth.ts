@@ -1,6 +1,6 @@
 // src/app/interfaces/auth.interface.ts
 
-export interface LoginCredentials {
+export interface Loginrequest {
   email: string;
   password: string;
 }
@@ -10,11 +10,3 @@ export interface AuthResponse {
   refresh_token: string;
 }
 
-export interface User {
-  id: number;
-  email: string;
-  password: string;
-  name: string;
-  role: string;
-  avatar: string;
-}

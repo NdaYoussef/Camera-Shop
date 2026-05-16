@@ -3,49 +3,48 @@
 import { inject, Injectable, PLATFORM_ID } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable, tap } from 'rxjs';
-import { AuthResponse, LoginCredentials, User } from '../interfaces/auth';
+import { AuthResponse, Loginrequest, } from '../interfaces/auth';
 import { isPlatformBrowser } from '@angular/common';
+import { API_URLS } from '../constants/APi_URLS';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AuthService {
-  private readonly apiUrl = 'https://api.escuelajs.co/api/v1';
-  private readonly TOKEN_KEY = 'access_token';
-  private readonly REFRESH_TOKEN_KEY = 'refresh_token';
+  private TOKEN_KEY = 'access_token';
    platformId = inject(PLATFORM_ID);
 
   constructor(private http: HttpClient) {}
 
-  login(credentials: LoginCredentials): Observable<AuthResponse> {
+  login(data: Loginrequest): Observable<AuthResponse> {
     return this.http
-      .post<AuthResponse>(`${this.apiUrl}/auth/login`, credentials)
+      .post<AuthResponse>(API_URLS.login, data)
       .pipe(
         tap((response) => {
-          localStorage.setItem(this.TOKEN_KEY, response.access_token);
-          localStorage.setItem(this.REFRESH_TOKEN_KEY, response.refresh_token);
+           this.saveToken(response.access_token);
         })
       );
   }
 
-  getProfile(): Observable<User> {
-    return this.http.get<User>(`${this.apiUrl}/auth/profile`);
-  }
+   saveToken(keyValue:string){
+    localStorage.setItem(this.TOKEN_KEY,keyValue);
 
-  logout(): void {
-    localStorage.removeItem(this.TOKEN_KEY);
-    localStorage.removeItem(this.REFRESH_TOKEN_KEY);
-  }
-
-    getToken(): string | null {
+     }
+      getToken(): string | null {
 
     if (isPlatformBrowser(this.platformId)) {
-      return localStorage.getItem('token');
+      return localStorage.getItem('access_token');
     }
 
     return null;
   }
 
+
+  logout(): void {
+    localStorage.removeItem(this.TOKEN_KEY);
+  }
+
+   
   isLoggedIn(): boolean {
     return !!this.getToken();
   }

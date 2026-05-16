@@ -13,27 +13,22 @@ import { AuthService } from '../Services/authservice';
   templateUrl: './auth-login.html',
   styleUrls: ['./auth-login.css'],
 })
-export class LoginAuthComponent implements OnInit {
+export class LoginAuthComponent  {
   loginForm!: FormGroup;
   isLoading = false;
   errorMessage = '';
-  showPassword = false;
 
   constructor(
     private authService: AuthService,
     private router: Router
-  ) {}
-
-  ngOnInit(): void {
-    if (this.authService.isLoggedIn()) {
-      this.router.navigate(['/products']);
-    }
-
-    this.loginForm = new FormGroup({
+  ) {
+ this.loginForm = new FormGroup({
       email: new FormControl('', [Validators.required, Validators.email]),
       password: new FormControl('', [Validators.required, Validators.minLength(4)]),
     });
   }
+
+  
 
   get emailControl() {
     return this.loginForm.get('email');
@@ -43,23 +38,20 @@ export class LoginAuthComponent implements OnInit {
     return this.loginForm.get('password');
   }
 
-  togglePassword(): void {
-    this.showPassword = !this.showPassword;
-  }
+  
 
   onSubmit(): void {
     if (this.loginForm.invalid) {
-      this.loginForm.markAllAsTouched();
       return;
     }
 
     this.isLoading = true;
     this.errorMessage = '';
 
-    this.authService.login(this.loginForm.value).subscribe({
+    this.authService.login(this.loginForm.getRawValue()).subscribe({
       next: () => {
         this.isLoading = false;
-        this.router.navigate(['/productsApi']);
+        this.router.navigate(['/products']);
       },
       error: (err) => {
         this.isLoading = false;
